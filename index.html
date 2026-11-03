@@ -1,52 +1,146 @@
+
 <!DOCTYPE html>
 <html lang="ur">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zain Bhatti Chat</title>
-<style>
-body {
-  font-family: Arial;
-  background: #101827;
-  color: white;
-  text-align: center;
-  padding: 30px;
-}
-h1 { color: #00e5a8; }
-.chat {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 400px;
-  margin: auto;
-}
-input {
-  padding: 12px;
-  width: 65%;
-  border-radius: 8px;
-}
-button {
-  padding: 12px;
-  background: #00e5a8;
-  border: none;
-  border-radius: 8px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Zain Bhatti Chat</title>
+
+  <!-- App manifest -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- App colors -->
+  <meta name="theme-color" content="#101827">
+  <meta name="background-color" content="#101827">
+
+  <!-- Mobile app display -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Zain Chat">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chat {
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 {
+      color: #00e5a8;
+      font-size: 26px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .message-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 12px;
+      width: 100%;
+      min-width: 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 16px;
+      background: #00e5a8;
+      color: #101827;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #reply {
+      margin-top: 20px;
+      overflow-wrap: anywhere;
+    }
+  </style>
 </head>
+
 <body>
-<div class="chat">
-<h1>Zain Bhatti Chat</h1>
-<p>Welcome to Zain Bhatti Chat!</p>
-<input id="msg" placeholder="اپنا پیغام لکھیں">
-<button onclick="send()">Send</button>
-<p id="reply"></p>
-</div>
-<script>
-function send() {
-let m = document.getElementById("msg").value;
-document.getElementById("reply").innerText =
-"آپ کا پیغام: " + m;
-}
-</script>
+  <main class="chat">
+    <h1>Zain Bhatti Chat</h1>
+
+    <p>Welcome to Zain Bhatti Chat!</p>
+
+    <div class="message-area">
+      <input
+        id="msg"
+        type="text"
+        placeholder="اپنا پیغام لکھیں"
+        autocomplete="off"
+      >
+
+      <button id="sendButton" type="button">Send</button>
+    </div>
+
+    <p id="reply" aria-live="polite"></p>
+  </main>
+
+  <script>
+    function send() {
+      const input = document.getElementById("msg");
+      const reply = document.getElementById("reply");
+      const message = input.value.trim();
+
+      if (message === "") {
+        reply.innerText = "براہِ کرم پہلے پیغام لکھیں۔";
+        return;
+      }
+
+      reply.innerText = "آپ کا پیغام: " + message;
+      input.value = "";
+    }
+
+    document.getElementById("sendButton").addEventListener("click", send);
+
+    document.getElementById("msg").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        send();
+      }
+    });
+
+    // Register the service worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function() {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .catch(function(error) {
+            console.log("Service worker registration failed:", error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
