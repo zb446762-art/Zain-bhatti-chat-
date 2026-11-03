@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zain Bhatti Chat</title>
+<style>
+body {
+  font-family: Arial;
+  background: #101827;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+h1 { color: #00e5a8; }
+.chat {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+input {
+  padding: 12px;
+  width: 65%;
+  border-radius: 8px;
+}
+button {
+  padding: 12px;
+  background: #00e5a8;
+  border: none;
+  border-radius: 8px;
+}
+</style>
+</head>
+<body>
+<div class="chat">
+<h1>Zain Bhatti Chat</h1>
+<p>Welcome to Zain Bhatti Chat!</p>
+<input id="msg" placeholder="اپنا پیغام لکھیں">
+<button onclick="send()">Send</button>
+<p id="reply"></p>
+</div>
+<script>
+function send() {
+let m = document.getElementById("msg").value;
+document.getElementById("reply").innerText =
+"آپ کا پیغام: " + m;
+}
+</script>
+</body>
+</html>
