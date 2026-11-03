@@ -2,145 +2,457 @@
 <!DOCTYPE html>
 <html lang="ur">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zain Bhatti Chat</title>
+<meta name="theme-color" content="#101827">
+<link rel="manifest" href="./manifest.json">
 
-  <title>Zain Bhatti Chat</title>
-
-  <!-- App manifest -->
-  <link rel="manifest" href="./manifest.json">
-
-  <!-- App colors -->
-  <meta name="theme-color" content="#101827">
-  <meta name="background-color" content="#101827">
-
-  <!-- Mobile app display -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Zain Chat">
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #101827;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .chat {
-      background: #1e293b;
-      padding: 24px;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    }
-
-    h1 {
-      color: #00e5a8;
-      font-size: 26px;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    .message-area {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    input {
-      padding: 12px;
-      width: 100%;
-      min-width: 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 12px 16px;
-      background: #00e5a8;
-      color: #101827;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #reply {
-      margin-top: 20px;
-      overflow-wrap: anywhere;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101827;color:white;font-family:Arial,sans-serif}
+header{background:#172438;padding:16px;text-align:center;color:#00e5a8;font-size:22px;font-weight:bold}
+.container{max-width:900px;margin:auto;padding:15px}
+.panel{background:#1e293b;padding:18px;border-radius:12px;margin:12px 0}
+input,button{padding:13px;border:0;border-radius:8px;font-size:15px}
+input{width:100%;margin:6px 0;background:#f1f5f9;color:#111}
+button{background:#00e5a8;color:#101827;font-weight:bold;cursor:pointer;margin:4px}
+.hidden{display:none!important}
+#app{display:grid;grid-template-columns:260px 1fr;gap:12px}
+#users{max-height:65vh;overflow:auto}
+.user{padding:12px;background:#29374c;border-radius:8px;margin:6px 0;cursor:pointer}
+.user:hover{background:#354761}
+#messages{height:48vh;overflow:auto;background:#111c2d;padding:12px;border-radius:8px}
+.msg{background:#29374c;padding:10px;border-radius:10px;margin:8px 0;max-width:85%;overflow-wrap:anywhere}
+.mine{background:#075e50;margin-left:auto}
+.msg img,.msg video{max-width:100%;border-radius:8px}
+#composer{display:flex;gap:5px;margin-top:8px}
+#composer input{flex:1;min-width:0}
+small{color:#cbd5e1}
+@media(max-width:650px){
+#app{grid-template-columns:1fr}
+#users{max-height:180px}
+#messages{height:42vh}
+}
+</style>
 </head>
 
 <body>
-  <main class="chat">
-    <h1>Zain Bhatti Chat</h1>
+<header>💬 Zain Bhatti Chat</header>
 
-    <p>Welcome to Zain Bhatti Chat!</p>
+<div class="container">
 
-    <div class="message-area">
-      <input
-        id="msg"
-        type="text"
-        placeholder="اپنا پیغام لکھیں"
-        autocomplete="off"
-      >
+<section id="authBox" class="panel">
+<h2 id="authTitle">اپنا اکاؤنٹ بنائیں</h2>
+<input id="name" placeholder="آپ کا نام">
+<input id="email" type="email" placeholder="ای میل">
+<input id="password" type="password" placeholder="پاس ورڈ">
+<button id="authButton">اکاؤنٹ بنائیں</button>
+<button id="switchAuth">پہلے سے اکاؤنٹ ہے؟ لاگ اِن کریں</button>
+<p id="authMessage"></p>
+</section>
 
-      <button id="sendButton" type="button">Send</button>
-    </div>
+<section id="mainBox" class="hidden">
+<div class="panel">
+آپ لاگ اِن ہیں: <b id="myName"></b>
+<button id="logoutButton">لاگ آؤٹ</button>
+</div>
 
-    <p id="reply" aria-live="polite"></p>
-  </main>
+<div id="app">
+<div class="panel">
+<h3>صارفین تلاش کریں</h3>
+<input id="search" placeholder="نام یا ای میل تلاش کریں">
+<div id="users">صارفین لوڈ ہو رہے ہیں...</div>
+</div>
 
-  <script>
-    function send() {
-      const input = document.getElementById("msg");
-      const reply = document.getElementById("reply");
-      const message = input.value.trim();
+<div class="panel">
+<h3 id="chatTitle">چیٹ کھولنے کے لیے صارف منتخب کریں</h3>
+<div id="messages"></div>
 
-      if (message === "") {
-        reply.innerText = "براہِ کرم پہلے پیغام لکھیں۔";
-        return;
-      }
+<div id="composer">
+<input id="messageInput" placeholder="اپنا پیغام لکھیں">
+<button id="sendButton">بھیجیں</button>
+</div>
 
-      reply.innerText = "آپ کا پیغام: " + message;
-      input.value = "";
+<div style="margin-top:10px">
+<label>تصویر یا ویڈیو:
+<input id="mediaInput" type="file" accept="image/*,video/*">
+</label>
+<button id="voiceButton">🎙️ وائس ریکارڈ کریں</button>
+<p id="status"></p>
+</div>
+</div>
+</div>
+</section>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+
+<script>
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBBM8njxaNWZcib0HA3kPNmw32CMc0tqs",
+  authDomain: "zain-bhatti-chat.firebaseapp.com",
+  projectId: "zain-bhatti-chat",
+  storageBucket: "zain-bhatti-chat.firebasestorage.app",
+  messagingSenderId: "815632070562",
+  appId: "1:815632070562:web:8e9651483d6c914f1064fb"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+let currentUser = null;
+let selectedUser = null;
+let unsubscribeMessages = null;
+let allUsers = [];
+let registerMode = true;
+let recorder = null;
+let audioChunks = [];
+
+const $ = id => document.getElementById(id);
+
+function showStatus(message) {
+  $("status").textContent = message;
+}
+
+function chatId(uid1, uid2) {
+  return [uid1, uid2].sort().join("_");
+}
+
+// Account registration and login
+$("switchAuth").onclick = () => {
+  registerMode = !registerMode;
+  $("authTitle").textContent = registerMode ? "اپنا اکاؤنٹ بنائیں" : "اپنے اکاؤنٹ میں لاگ اِن کریں";
+  $("authButton").textContent = registerMode ? "اکاؤنٹ بنائیں" : "لاگ اِن کریں";
+  $("switchAuth").textContent = registerMode ? "پہلے سے اکاؤنٹ ہے؟ لاگ اِن کریں" : "نیا اکاؤنٹ بنائیں";
+  $("name").classList.toggle("hidden", !registerMode);
+  $("authMessage").textContent = "";
+};
+
+$("authButton").onclick = async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  const name = $("name").value.trim();
+
+  if (!email || !password || (registerMode && !name)) {
+    $("authMessage").textContent = "تمام ضروری خانے پُر کریں۔";
+    return;
+  }
+
+  if (password.length < 6) {
+    $("authMessage").textContent = "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔";
+    return;
+  }
+
+  $("authButton").disabled = true;
+  try {
+    if (registerMode) {
+      const result = await auth.createUserWithEmailAndPassword(email, password);
+      await result.user.updateProfile({displayName:name});
+      await db.collection("users").doc(result.user.uid).set({
+        uid: result.user.uid,
+        name: name,
+        email: email.toLowerCase(),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      await auth.signInWithEmailAndPassword(email, password);
     }
+  } catch (error) {
+    $("authMessage").textContent = "مسئلہ: " + error.message;
+  }
+  $("authButton").disabled = false;
+};
 
-    document.getElementById("sendButton").addEventListener("click", send);
+// Login state
+auth.onAuthStateChanged(async user => {
+  if (!user) {
+    currentUser = null;
+    $("authBox").classList.remove("hidden");
+    $("mainBox").classList.add("hidden");
+    return;
+  }
 
-    document.getElementById("msg").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        send();
-      }
+  currentUser = user;
+  $("authBox").classList.add("hidden");
+  $("mainBox").classList.remove("hidden");
+
+  const userRef = db.collection("users").doc(user.uid);
+  const userDoc = await userRef.get();
+
+  if (!userDoc.exists) {
+    await userRef.set({
+      uid:user.uid,
+      name:user.displayName || user.email,
+      email:user.email.toLowerCase(),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge:true});
+  }
+
+  const profile = await userRef.get();
+  $("myName").textContent = profile.data().name || user.email;
+
+  await userRef.set({
+    lastSeen:firebase.firestore.FieldValue.serverTimestamp()
+  }, {merge:true});
+
+  loadUsers();
+});
+
+$("logoutButton").onclick = () => auth.signOut();
+
+// Load users
+function loadUsers() {
+  db.collection("users").onSnapshot(snapshot => {
+    allUsers = snapshot.docs
+      .map(doc => doc.data())
+      .filter(u => u.uid !== currentUser.uid);
+    showUsers();
+  }, error => showStatus("صارفین لوڈ نہیں ہوئے: " + error.message));
+}
+
+function showUsers() {
+  const search = $("search").value.toLowerCase();
+  $("users").innerHTML = "";
+
+  const filtered = allUsers.filter(u =>
+    (u.name || "").toLowerCase().includes(search) ||
+    (u.email || "").toLowerCase().includes(search)
+  );
+
+  if (!filtered.length) {
+    $("users").textContent = "کوئی صارف نہیں ملا۔";
+    return;
+  }
+
+  filtered.forEach(u => {
+    const div = document.createElement("div");
+    div.className = "user";
+    const name = document.createElement("b");
+    name.textContent = u.name || "بغیر نام";
+    const email = document.createElement("small");
+    email.textContent = u.email || "";
+    email.style.display = "block";
+    div.append(name, email);
+    div.onclick = () => openChat(u);
+    $("users").appendChild(div);
+  });
+}
+
+$("search").addEventListener("input", showUsers);
+
+// Open private chat
+function openChat(user) {
+  selectedUser = user;
+  $("chatTitle").textContent = user.name || user.email;
+  $("messages").innerHTML = "";
+  showStatus("");
+
+  if (unsubscribeMessages) unsubscribeMessages();
+
+  const id = chatId(currentUser.uid, user.uid);
+
+  unsubscribeMessages = db.collection("chats")
+    .doc(id).collection("messages")
+    .orderBy("createdAt")
+    .onSnapshot(snapshot => {
+      $("messages").innerHTML = "";
+      snapshot.forEach(doc => {
+        const m = doc.data();
+        const div = document.createElement("div");
+        div.className = "msg" + (m.senderId === currentUser.uid ? " mine" : "");
+
+        if (m.type === "text") {
+          div.textContent = m.text || "";
+        } else if (m.type === "image") {
+          const img = document.createElement("img");
+          img.src = m.url;
+          img.alt = "تصویر";
+          div.appendChild(img);
+        } else if (m.type === "video") {
+          const video = document.createElement("video");
+          video.src = m.url;
+          video.controls = true;
+          div.appendChild(video);
+        } else if (m.type === "audio") {
+          const audio = document.createElement("audio");
+          audio.src = m.url;
+          audio.controls = true;
+          div.appendChild(audio);
+        }
+
+        $("messages").appendChild(div);
+      });
+      $("messages").scrollTop = $("messages").scrollHeight;
+    }, error => showStatus("چیٹ کی خرابی: " + error.message));
+}
+
+// Send text message
+async function sendMessage(text) {
+  if (!selectedUser) {
+    showStatus("پہلے کسی صارف کو منتخب کریں۔");
+    return;
+  }
+
+  text = text.trim();
+  if (!text) return;
+
+  const id = chatId(currentUser.uid, selectedUser.uid);
+  try {
+    await db.collection("chats").doc(id).collection("messages").add({
+      text:text,
+      type:"text",
+      senderId:currentUser.uid,
+      receiverId:selectedUser.uid,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    // Register the service worker
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function() {
-        navigator.serviceWorker
-          .register("./service-worker.js")
-          .catch(function(error) {
-            console.log("Service worker registration failed:", error);
-          });
-      });
-    }
-  </script>
+    await db.collection("chats").doc(id).set({
+      members:[currentUser.uid, selectedUser.uid],
+      lastMessage:text,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge:true});
+
+    $("messageInput").value = "";
+    showStatus("");
+  } catch(error) {
+    showStatus("پیغام نہیں بھیجا گیا: " + error.message);
+  }
+}
+
+$("sendButton").onclick = () => sendMessage($("messageInput").value);
+$("messageInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") sendMessage($("messageInput").value);
+});
+
+// Upload image or video
+$("mediaInput").onchange = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!selectedUser) {
+    showStatus("پہلے چیٹ منتخب کریں۔");
+    event.target.value = "";
+    return;
+  }
+
+  if (file.size > 50 * 1024 * 1024) {
+    showStatus("فائل 50 MB سے چھوٹی ہونی چاہیے۔");
+    event.target.value = "";
+    return;
+  }
+
+  try {
+    showStatus("فائل اپ لوڈ ہو رہی ہے...");
+    const id = chatId(currentUser.uid, selectedUser.uid);
+    const path = "chatMedia/" + id + "/" + currentUser.uid + "/" + Date.now() + "_" + file.name;
+    const ref = storage.ref(path);
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+
+    const type = file.type.startsWith("video/") ? "video" : "image";
+
+    await db.collection("chats").doc(id).collection("messages").add({
+      type:type,
+      url:url,
+      senderId:currentUser.uid,
+      receiverId:selectedUser.uid,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    await db.collection("chats").doc(id).set({
+      members:[currentUser.uid, selectedUser.uid],
+      lastMessage:type === "video" ? "ویڈیو" : "تصویر",
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge:true});
+
+    showStatus("فائل بھیج دی گئی۔");
+  } catch(error) {
+    showStatus("فائل اپ لوڈ نہیں ہوئی: " + error.message);
+  }
+  event.target.value = "";
+};
+
+// Voice recording
+$("voiceButton").onclick = async () => {
+  if (!selectedUser) {
+    showStatus("پہلے چیٹ منتخب کریں۔");
+    return;
+  }
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showStatus("وائس ریکارڈنگ کے لیے محفوظ HTTPS ویب سائٹ ضروری ہے۔");
+    return;
+  }
+
+  if (recorder && recorder.state === "recording") {
+    recorder.stop();
+    $("voiceButton").textContent = "🎙️ وائس ریکارڈ کریں";
+    showStatus("وائس تیار ہو رہی ہے...");
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    audioChunks = [];
+    recorder = new MediaRecorder(stream);
+
+    recorder.ondataavailable = e => {
+      if (e.data.size > 0) audioChunks.push(e.data);
+    };
+
+    recorder.onstop = async () => {
+      stream.getTracks().forEach(track => track.stop());
+      const blob = new Blob(audioChunks, {type:recorder.mimeType || "audio/webm"});
+
+      try {
+        const id = chatId(currentUser.uid, selectedUser.uid);
+        const ref = storage.ref("chatMedia/" + id + "/" + currentUser.uid + "/voice_" + Date.now() + ".webm");
+        await ref.put(blob);
+        const url = await ref.getDownloadURL();
+
+        await db.collection("chats").doc(id).collection("messages").add({
+          type:"audio",
+          url:url,
+          senderId:currentUser.uid,
+          receiverId:selectedUser.uid,
+          createdAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        await db.collection("chats").doc(id).set({
+          members:[currentUser.uid, selectedUser.uid],
+          lastMessage:"وائس پیغام",
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+        }, {merge:true});
+
+        showStatus("وائس پیغام بھیج دیا گیا۔");
+      } catch(error) {
+        showStatus("وائس اپ لوڈ نہیں ہوئی: " + error.message);
+      }
+    };
+
+    recorder.start();
+    $("voiceButton").textContent = "⏹️ ریکارڈنگ بند کریں";
+    showStatus("ریکارڈنگ جاری ہے...");
+  } catch(error) {
+    showStatus("مائیکروفون کی اجازت دیں: " + error.message);
+  }
+};
+
+// Service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(console.error);
+  });
+}
+</script>
 </body>
 </html>
