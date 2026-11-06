@@ -1,133 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#080706">
-<title>Zain Bhatti Chat</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#080706;--panel:#11100e;--panel2:#191713;--gold:#f5c342;--gold2:#ffdf79;--muted:#aaa39a;--line:#332a17;--green:#28c76f;--red:#ed4545}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Inter,Arial,sans-serif;min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer}
-.app{max-width:520px;min-height:100vh;margin:auto;background:linear-gradient(160deg,#0b0906,#080706 40%,#100c05);position:relative;padding-bottom:76px;overflow:hidden}
-.top{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#090806f5;z-index:5}
-.brand{font-weight:800;color:var(--gold);font-size:19px;display:flex;gap:9px;align-items:center}.crown{font-size:25px}
-.iconbtn{border:0;background:transparent;color:var(--gold);font-size:23px;padding:7px}
-.page{display:none;padding:14px 14px 20px}.page.active{display:block}
-.search{width:100%;border:1px solid #4b4029;border-radius:24px;background:#1b1916;color:white;padding:13px 16px;outline:none;margin:4px 0 13px}
-.tabs{display:flex;justify-content:space-around;border-bottom:1px solid var(--line);margin:0 -14px 10px}.tab{background:none;border:0;color:#aaa;padding:13px 8px;min-width:30%;font-weight:600}.tab.active{color:var(--gold);border-bottom:3px solid var(--gold)}
-.chatrow,.userrow{display:flex;align-items:center;gap:13px;padding:12px 5px;border-bottom:1px solid #29231a;cursor:pointer;min-height:76px}
-.avatar{width:53px;height:53px;border-radius:50%;background:linear-gradient(135deg,#59451a,#17130b);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:20px;color:var(--gold)}
-.avatar img{width:100%;height:100%;object-fit:cover}.grow{flex:1;min-width:0}.name{font-weight:600;font-size:15px}.preview{color:#aaa;font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{color:#aaa;font-size:11px;white-space:nowrap}.unread{background:var(--gold);color:#171007;border-radius:50%;min-width:20px;height:20px;display:grid;place-items:center;font-size:11px;font-weight:800;margin-top:6px}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:72px;background:#0d0b08;border-top:1px solid var(--line);display:flex;justify-content:space-around;z-index:10;padding-bottom:env(safe-area-inset-bottom)}
-.nav{flex:1;border:0;background:none;color:#888;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px}.nav span:first-child{font-size:21px}.nav.active{color:var(--gold)}
-.primary{border:0;border-radius:30px;background:linear-gradient(100deg,#e5a91e,#ffe17b);color:#171006;font-weight:800;padding:13px 20px}
-.outline{border:1.5px solid var(--gold);border-radius:30px;background:transparent;color:var(--gold);padding:12px 20px;font-weight:700}
-.full{width:100%}.muted{color:var(--muted)}.center{text-align:center}.hidden{display:none!important}
-.auth{min-height:100vh;max-width:520px;margin:auto;padding:30px 25px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(ellipse at 50% 15%,#5b3c0c55,transparent 45%),radial-gradient(ellipse at 50% 90%,#76500b44,transparent 35%),#050403}
-.logo{font-size:65px;color:var(--gold);margin-bottom:10px}.auth h1{color:var(--gold2);font-size:30px;margin:0 0 8px}.auth p{color:#d6c79e}.authbox{width:100%;margin-top:25px}.field{width:100%;padding:14px 16px;background:#171512;border:1px solid #51401e;border-radius:12px;color:#fff;margin:7px 0;outline:none}
-.authbox .primary,.authbox .outline{margin-top:12px}.switch{background:none;border:0;color:var(--gold);margin-top:18px}
-.chathead{display:flex;align-items:center;gap:10px;padding:8px 0 14px;border-bottom:1px solid var(--line)}.chathead .grow{cursor:pointer}.messages{height:calc(100dvh - 190px);min-height:300px;overflow-y:auto;padding:15px 0;background-image:radial-gradient(#b88b2510 1px,transparent 1px);background-size:22px 22px}
-.bubble{max-width:82%;padding:10px 12px;border-radius:15px;margin:7px 0;position:relative;font-size:14px;line-height:1.4;word-break:break-word}.mine{margin-left:auto;background:linear-gradient(120deg,#e9b334,#ffd76b);color:#211706;border-bottom-right-radius:4px}.theirs{background:#24221f;color:#fff;border-bottom-left-radius:4px}.stamp{font-size:9px;opacity:.7;text-align:right;margin-top:4px}.bubble img{max-width:100%;border-radius:9px;display:block}.composer{display:flex;gap:6px;align-items:center;background:#1a1814;border:1px solid #51401e;border-radius:22px;padding:5px 7px;position:sticky;bottom:75px}.composer input{min-width:0;flex:1;background:transparent;border:0;color:white;padding:10px;outline:none}.round{border:0;border-radius:50%;width:40px;height:40px;background:var(--gold);color:#171006;font-size:18px}
-.sectiontitle{color:var(--gold);font-weight:700;margin:12px 0}.statusring{border:2px solid var(--green);padding:3px}.statuscard{padding:13px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
-.settingscard{background:#17140f;border:1px solid #352a17;border-radius:15px;padding:14px;margin:10px 0}.settingrow{padding:15px 3px;border-bottom:1px solid #302719;display:flex;gap:13px;align-items:center;cursor:pointer}.settingrow:last-child{border:0}
-.profilepic{width:105px;height:105px;margin:20px auto;border:3px solid var(--gold);border-radius:50%;display:grid;place-items:center;overflow:hidden;font-size:40px}.profilepic img{width:100%;height:100%;object-fit:cover}
-.modal{position:fixed;inset:0;background:#000b;z-index:30;display:flex;align-items:flex-end;justify-content:center}.sheet{width:min(520px,100%);background:#171511;border:1px solid #5a451c;border-radius:22px 22px 0 0;padding:22px;max-height:85vh;overflow:auto}.sheet h3{color:var(--gold);margin-top:0}.sheet button{margin:5px}
-.calloverlay{position:fixed;inset:0;background:radial-gradient(circle at 50% 40%,#49320d,#080706 60%);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.callavatar{width:145px;height:145px;border-radius:50%;border:4px solid var(--gold);display:grid;place-items:center;font-size:60px;margin-bottom:25px;overflow:hidden}.callactions{display:flex;gap:28px;margin-top:90px}.callactions button{width:62px;height:62px;border-radius:50%;border:0;font-size:25px}.danger{background:#e63e42;color:white}.success{background:#20bd69;color:white}
-.empty{text-align:center;color:#aaa;padding:50px 15px}.gold{color:var(--gold)}
-</style>
-</head>
-<body>
-<div id="authView" class="auth">
-  <div class="logo">♛</div><h1>Zain Bhatti Chat</h1><p>Connect • Chat • Share</p>
-  <div class="authbox">
-    <div id="loginFields"><input id="loginEmail" class="field" type="email" placeholder="Email address"><input id="loginPass" class="field" type="password" placeholder="Password"><button class="primary full" onclick="login()">Log In</button></div>
-    <div id="signupFields" class="hidden"><input id="signupName" class="field" placeholder="Your name"><input id="signupEmail" class="field" type="email" placeholder="Email address"><input id="signupPass" class="field" type="password" placeholder="Password (6+ characters)"><button class="primary full" onclick="signup()">Create Account</button></div>
-    <button id="switchAuth" class="switch" onclick="toggleAuth()">New here? Sign Up</button>
-    <p id="authError" class="center" style="color:#ff7777"></p>
-  </div>
-</div>
-<div id="appView" class="app hidden">
-  <header class="top"><div class="brand"><span class="crown">♛</span> Zain Bhatti Chat</div><button class="iconbtn" onclick="openNewChat()">＋</button></header>
-  <main>
-    <section id="chatsPage" class="page active">
-      <input id="userSearch" class="search" placeholder="⌕  Search users..." oninput="searchUsers(this.value)">
-      <div class="tabs"><button class="tab active" onclick="chatFilter('chats',this)">Chats</button><button class="tab" onclick="chatFilter('groups',this)">Groups</button><button class="tab" onclick="chatFilter('users',this)">People</button></div>
-      <div id="chatList"></div><div id="searchResults"></div>
-    </section>
-    <section id="callsPage" class="page"><h3 class="gold">☎ Calls</h3><div id="callsList"></div></section>
-    <section id="statusPage" class="page"><h3 class="gold">◉ Status</h3><div class="statuscard" onclick="addStatus()"><div class="avatar statusring" id="myStatusAvatar">＋</div><div class="grow"><b>My Status</b><div class="preview">Tap to add status update</div></div><span class="gold">＋</span></div><h4 class="sectiontitle">Recent Updates</h4><div id="statusList"></div></section>
-    <section id="settingsPage" class="page">
-      <h3 class="gold">Settings</h3><div class="settingscard center" onclick="editProfile()"><div class="profilepic" id="settingsAvatar">👤</div><b id="settingsName">Your profile</b><div class="preview" id="settingsEmail"></div><p class="gold">Edit profile ✎</p></div>
-      <div class="settingscard">
-        <div class="settingrow" onclick="editProfile()">👤 <div class="grow"><b>Account</b><div class="preview">Profile and account details</div></div>›</div>
-        <div class="settingrow" onclick="alert('Notifications are controlled by your browser and device settings.')">🔔 <div class="grow"><b>Notifications</b><div class="preview">Message and call alerts</div></div>›</div>
-        <div class="settingrow" onclick="alert('Media is stored in your Firebase Storage bucket.')">▣ <div class="grow"><b>Storage & Data</b><div class="preview">Media and data usage</div></div>›</div>
-        <div class="settingrow" onclick="alert('Zain Bhatti Chat v1.0')">ⓘ <div class="grow"><b>About</b><div class="preview">Zain Bhatti Chat v1.0</div></div>›</div>
-      </div><button class="outline full" onclick="logout()">⇥ Log Out</button>
-    </section>
-    <section id="conversationPage" class="page">
-      <div class="chathead"><button class="iconbtn" onclick="showPage('chatsPage')">‹</button><div class="avatar" id="peerAvatar">👤</div><div class="grow" onclick="showPeerInfo()"><div class="name" id="peerName">Chat</div><div class="preview" id="peerState">online</div></div><button class="iconbtn" onclick="startCall('audio')">☎</button><button class="iconbtn" onclick="startCall('video')">▣</button><button class="iconbtn" onclick="showPeerInfo()">⋮</button></div>
-      <div id="messages" class="messages"></div>
-      <div class="composer"><button class="iconbtn" onclick="document.getElementById('mediaInput').click()">＋</button><input id="messageInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()"><input id="mediaInput" type="file" accept="image/*,video/*" class="hidden" onchange="sendMedia(this)"><button class="round" onclick="sendMessage()">➤</button></div>
-    </section>
-  </main>
-  <nav class="bottom">
-    <button class="nav active" data-page="chatsPage" onclick="showPage('chatsPage',this)"><span>●</span>Chats</button>
-    <button class="nav" data-page="callsPage" onclick="showPage('callsPage',this)"><span>☎</span>Calls</button>
-    <button class="nav" data-page="statusPage" onclick="showPage('statusPage',this)"><span>◉</span>Status</button>
-    <button class="nav" data-page="settingsPage" onclick="showPage('settingsPage',this)"><span>⚙</span>Settings</button>
-  </nav>
-</div>
-<div id="modal" class="modal hidden" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
-<div id="callOverlay" class="calloverlay hidden"><div class="callavatar" id="callAvatar">👤</div><h2 id="callName">Calling...</h2><p id="callLabel" class="muted">Connecting...</p><div class="callactions"><button class="success" onclick="alert('Microphone permission and WebRTC call signaling must be configured for live calls.')">🎙</button><button class="danger" onclick="endCall()">☎</button><button onclick="alert('Camera permission and WebRTC call signaling must be configured for live video.')">▣</button></div></div>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-<script>
-/* Firebase project configuration */
-const firebaseConfig = {
-  apiKey: "AIzaSyBBM8njxaNWZcZib0HA3kPNmw32CMc0tqs",
-  authDomain: "zain-bhatti-chat.firebaseapp.com",
-  projectId: "zain-bhatti-chat",
-  storageBucket: "zain-bhatti-chat.firebasestorage.app",
-  messagingSenderId: "815632070562",
-  appId: "1:815632070562:web:4a9b1ce52f77650d1064fb"
-};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(), db=firebase.firestore(), storage=firebase.storage();
-let me=null, myData={}, currentChat=null, peer=null, chatUnsub=null, msgUnsub=null, chatMode='chats', currentPage='chatsPage';
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const avatar=(u)=>u?.photoURL?`<img src="${esc(u.photoURL)}">`:(esc((u?.name||u?.displayName||'?').slice(0,1).toUpperCase()));
-function toggleAuth(){const sign=$('signupFields').classList.toggle('hidden');$('loginFields').classList.toggle('hidden',sign);$('switchAuth').textContent=sign?'Already registered? Log In':'New here? Sign Up';$('authError').textContent='';}
-function authError(e){$('authError').textContent=e.message||String(e);}
-async function login(){try{await auth.signInWithEmailAndPassword($('loginEmail').value.trim(),$('loginPass').value)}catch(e){authError(e)}}
-async function signup(){try{const name=$('signupName').value.trim();if(!name)throw Error('Please enter your name');const c=await auth.createUserWithEmailAndPassword($('signupEmail').value.trim(),$('signupPass').value);await c.user.updateProfile({displayName:name});await db.collection('users').doc(c.user.uid).set({uid:c.user.uid,name,email:c.user.email,photoURL:'',about:'Hey there! I am using Zain Bhatti Chat',createdAt:firebase.firestore.FieldValue.serverTimestamp(),lastSeen:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});}catch(e){authError(e)}}
-async function logout(){if(chatUnsub)chatUnsub();if(msgUnsub)msgUnsub();await auth.signOut()}
-auth.onAuthStateChanged(async user=>{if(!user){me=null;$('authView').classList.remove('hidden');$('appView').classList.add('hidden');return}me=user;$('authView').classList.add('hidden');$('appView').classList.remove('hidden');await ensureProfile();loadProfile();loadChats();loadCalls();loadStatuses();});
-async function ensureProfile(){const r=db.collection('users').doc(me.uid),s=await r.get();if(!s.exists)await r.set({uid:me.uid,name:me.displayName||me.email.split('@')[0],email:me.email,photoURL:'',about:'Hey there! I am using Zain Bhatti Chat',createdAt:firebase.firestore.FieldValue.serverTimestamp(),lastSeen:firebase.firestore.FieldValue.serverTimestamp()});myData=(await r.get()).data()||{};r.set({online:true,lastSeen:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});}
-function loadProfile(){const n=myData.name||me.displayName||'User';$('settingsName').textContent=n;$('settingsEmail').textContent=me.email;$('settingsAvatar').innerHTML=avatar(myData);$('myStatusAvatar').innerHTML=avatar(myData)+'<small style="position:absolute"></small>'}
-function showPage(id,btn){if(msgUnsub){msgUnsub();msgUnsub=null}currentPage=id;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(id==='chatsPage')loadChats()}
-function chatFilter(mode,btn){chatMode=mode;document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');$('searchResults').innerHTML='';loadChats()}
-function loadChats(){if(!me)return;if(chatUnsub)chatUnsub();chatUnsub=db.collection('chats').where('members','array-contains',me.uid).onSnapshot(async snap=>{let docs=snap.docs.map(d=>({id:d.id,...d.data()}));docs.sort((a,b)=>(b.updatedAt?.toMillis?.()||0)-(a.updatedAt?.toMillis?.()||0));const html=[];for(const c of docs){const other=(c.members||[]).find(x=>x!==me.uid);let u={name:c.name||'Group',photoURL:''};if(c.type!=='group'&&other){const us=await db.collection('users').doc(other).get();u=us.data()||{name:'Unknown user'}}if(chatMode==='groups'&&c.type!=='group')continue;if(chatMode==='chats'&&c.type==='group')continue;html.push(`<div class="chatrow" onclick="openChat('${c.id}')"><div class="avatar">${avatar(u)}</div><div class="grow"><div class="name">${esc(c.type==='group'?c.name:u.name||'User')}</div><div class="preview">${esc(c.lastMessage||'Start chatting')}</div></div><div class="time">${c.updatedAt?.toDate?c.updatedAt.toDate().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):''}</div></div>`)}$('chatList').innerHTML=html.join('')||'<div class="empty">No chats yet.<br>Tap ＋ to find people and start chatting.</div>';},e=>console.error(e))}
-async function searchUsers(q){$('searchResults').innerHTML='';if(!q.trim()){loadChats();return}const snap=await db.collection('users').limit(100).get();const matches=snap.docs.map(d=>d.data()).filter(u=>u.uid!==me.uid&&((u.name||'').toLowerCase().includes(q.toLowerCase())||(u.email||'').toLowerCase().includes(q.toLowerCase())));$('chatList').innerHTML='';$('searchResults').innerHTML=matches.map(u=>`<div class="userrow" onclick="startChat('${u.uid}')"><div class="avatar">${avatar(u)}</div><div class="grow"><div class="name">${esc(u.name)}</div><div class="preview">${esc(u.email)}</div></div><span class="gold">＋</span></div>`).join('')||'<div class="empty">No users found</div>'}
-function openNewChat(){$('userSearch').focus();$('userSearch').scrollIntoView({behavior:'smooth'})}
-async function startChat(uid){const snap=await db.collection('chats').where('members','array-contains',me.uid).get();let found=snap.docs.find(d=>{const x=d.data();return x.type!=='group'&&(x.members||[]).includes(uid)});let id;if(found)id=found.id;else{const ref=await db.collection('chats').add({type:'private',members:[me.uid,uid],createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastMessage:''});id=ref.id}openChat(id)}
-async function openChat(id){currentChat=id;if(msgUnsub)msgUnsub();const c=(await db.collection('chats').doc(id).get()).data();const other=(c.members||[]).find(x=>x!==me.uid);if(c.type==='group'){peer={name:c.name||'Group',uid:null};}else{const s=await db.collection('users').doc(other).get();peer={...(s.data()||{}),uid:other}}$('peerName').textContent=peer.name||'Chat';$('peerAvatar').innerHTML=avatar(peer);$('peerState').textContent=peer.online?'online':'tap for contact info';showPage('conversationPage');msgUnsub=db.collection('chats').doc(id).collection('messages').orderBy('createdAt').onSnapshot(s=>{const box=$('messages');box.innerHTML=s.docs.map(d=>{const m=d.data(),mine=m.senderId===me.uid;let body=m.type==='image'?`<img src="${esc(m.mediaUrl)}">`:m.type==='video'?`<video controls style="max-width:100%"><source src="${esc(m.mediaUrl)}"></video>`:esc(m.text||'');return `<div class="bubble ${mine?'mine':'theirs'}">${body}<div class="stamp">${m.createdAt?.toDate?m.createdAt.toDate().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'Sending'} ${mine?'✓✓':''}</div></div>`}).join('');box.scrollTop=box.scrollHeight;});}
-async function sendMessage(){const text=$('messageInput').value.trim();if(!text||!currentChat)return;$('messageInput').value='';const ref=db.collection('chats').doc(currentChat);await ref.collection('messages').add({text,type:'text',senderId:me.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await ref.set({lastMessage:text,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}
-async function sendMedia(input){const f=input.files[0];if(!f||!currentChat)return;if(f.size>15*1024*1024){alert('Please choose a file smaller than 15 MB');input.value='';return}try{const path=`chatMedia/${currentChat}/${Date.now()}_${f.name.replace(/[^\w.-]/g,'_')}`;const task=await storage.ref(path).put(f);const url=await task.ref.getDownloadURL();const type=f.type.startsWith('video/')?'video':'image';await db.collection('chats').doc(currentChat).collection('messages').add({type,mediaUrl:url,text:f.name,senderId:me.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await db.collection('chats').doc(currentChat).set({lastMessage:type==='image'?'📷 Photo':'🎥 Video',updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(e){alert('Media upload failed: '+e.message)}input.value=''}
-function showPeerInfo(){if(!peer)return;openModal(`<h3>${esc(peer.name)}</h3><p>${esc(peer.email||'Group chat')}</p><p>${esc(peer.about||'')}</p><button class="outline full" onclick="closeModal()">Close</button>`)}
-function openModal(html){$('sheet').innerHTML=html;$('modal').classList.remove('hidden')}function closeModal(){$('modal').classList.add('hidden')}
-async function editProfile(){openModal(`<h3>Edit profile</h3><input id="editName" class="field" value="${esc(myData.name||'')}" placeholder="Name"><input id="editAbout" class="field" value="${esc(myData.about||'')}" placeholder="About"><input id="editPhoto" class="field" type="file" accept="image/*"><button class="primary full" onclick="saveProfile()">Save</button><button class="outline full" onclick="closeModal()">Cancel</button>`)}
-async function saveProfile(){try{let photoURL=myData.photoURL||'';const f=$('editPhoto').files[0];if(f){const r=await storage.ref(`profiles/${me.uid}/avatar`).put(f);photoURL=await r.ref.getDownloadURL()}myData={...myData,name:$('editName').value.trim()||'User',about:$('editAbout').value.trim(),photoURL};await db.collection('users').doc(me.uid).set(myData,{merge:true});await me.updateProfile({displayName:myData.name,photoURL});loadProfile();closeModal()}catch(e){alert(e.message)}}
-async function addStatus(){openModal(`<h3>Add status</h3><textarea id="statusText" class="field" rows="3" placeholder="What's on your mind?"></textarea><input id="statusFile" class="field" type="file" accept="image/*"><button class="primary full" onclick="saveStatus()">Share status</button>`)}
-async function saveStatus(){try{let mediaUrl='';const f=$('statusFile').files[0];if(f){const r=await storage.ref(`statuses/${me.uid}/${Date.now()}_${f.name}`).put(f);mediaUrl=await r.ref.getDownloadURL()}const text=$('statusText').value.trim();if(!text&&!mediaUrl)throw Error('Write something or choose a photo');await db.collection('statuses').add({uid:me.uid,name:myData.name,photoURL:myData.photoURL||'',text,mediaUrl,createdAt:firebase.firestore.FieldValue.serverTimestamp(),expiresAt:Date.now()+24*60*60*1000});closeModal();loadStatuses()}catch(e){alert(e.message)}}
-function loadStatuses(){db.collection('statuses').where('expiresAt','>',Date.now()).onSnapshot(s=>{$('statusList').innerHTML=s.docs.map(d=>{const x=d.data();return `<div class="statuscard"><div class="avatar statusring">${esc((x.name||'?')[0])}</div><div class="grow"><b>${esc(x.name||'User')}</b><div class="preview">${esc(x.text||'Photo status')}</div></div>${x.mediaUrl?`<button class="outline" onclick="window.open('${esc(x.mediaUrl)}','_blank')">View</button>`:''}</div>`}).join('')||'<div class="empty">No recent updates</div>'})}
-function loadCalls(){db.collection('calls').where('members','array-contains',me.uid).onSnapshot(s=>{$('callsList').innerHTML=s.docs.map(d=>{const x=d.data();return `<div class="chatrow"><div class="avatar">☎</div><div class="grow"><b>${esc(x.peerName||'Call')}</b><div class="preview">${esc(x.kind||'Audio')} call · ${esc(x.status||'Attempted')}</div></div><span class="time">${x.createdAt?.toDate?x.createdAt.toDate().toLocaleDateString():''}</span></div>`}).join('')||'<div class="empty">No calls yet</div>'})}
-async function startCall(kind){$('callName').textContent=peer?.name||'Calling';$('callLabel').textContent=(kind==='video'?'Video':'Audio')+' calling…';$('callAvatar').innerHTML=avatar(peer);$('callOverlay').classList.remove('hidden');try{await db.collection('calls').add({members:[me.uid,...(peer?.uid?[peer.uid]:[])],callerId:me.uid,calleeId:peer?.uid||null,peerName:peer?.name||'Group',kind,status:'initiated',createdAt:firebase.firestore.FieldValue.serverTimestamp()})}catch(e){console.error(e)}}
-function endCall(){$('callOverlay').classList.add('hidden')}
-</script>
-</body></html>
+
+async function searchUsers(q) {
+  const list = document.getElementById('chatList');
+  const results = document.getElementById('searchResults');
+
+  if (!q.trim()) {
+    results.innerHTML = '';
+    loadChats();
+    return;
+  }
+
+  list.innerHTML = '<div class="empty">Searching users...</div>';
+  results.innerHTML = '';
+
+  try {
+    const snapshot = await db.collection('users').get();
+
+    const search = q.trim().toLowerCase();
+
+    const users = snapshot.docs
+      .map(doc => ({
+        ...doc.data(),
+        uid: doc.id
+      }))
+      .filter(user => {
+        if (user.uid === me.uid) return false;
+
+        const name = String(user.name || '').toLowerCase();
+        const email = String(user.email || '').toLowerCase();
+
+        return name.includes(search) ||
+               email.includes(search);
+      });
+
+    list.innerHTML = '';
+
+    if (users.length === 0) {
+      results.innerHTML =
+        '<div class="empty">No user found. Check name or email.</div>';
+      return;
+    }
+
+    results.innerHTML = users.map(user => `
+      <div class="userrow"
+        onclick="startChat('${user.uid}')">
+
+        <div class="avatar">
+          ${esc((user.name || 'U').charAt(0).toUpperCase())}
+        </div>
+
+        <div class="grow">
+          <div class="name">${esc(user.name || 'User')}</div>
+          <div class="preview">${esc(user.email || '')}</div>
+        </div>
+
+        <span class="gold">＋ Chat</span>
+      </div>
+    `).join('');
+
+  } catch (error) {
+    console.error(error);
+    results.innerHTML =
+      '<div class="empty">Error: ' + esc(error.message) + '</div>';
+  }
+}
