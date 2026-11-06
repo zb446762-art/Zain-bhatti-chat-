@@ -1,79 +1,48 @@
-<!doctype html>
-<html lang="ur" dir="rtl">
+<!DOCTYPE html>
+<html lang="ur">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#075e54">
-<title>Zain Chat</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
+<title>Zain Bhatti Chat</title>
 <style>
-:root{--green:#075e54;--green2:#128c7e;--bg:#e9edef;--panel:#fff;--text:#111b21;--muted:#667781;--line:#e7edef;--sent:#d9fdd3;--danger:#b42318}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Naskh Arabic",sans-serif;background:var(--bg);color:var(--text)}
-button,input{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;background:var(--green);color:white;font-weight:700}
-button:disabled{opacity:.55;cursor:not-allowed}.hidden{display:none!important}
-#authView{max-width:430px;margin:6vh auto;padding:22px;background:white;border-radius:16px;box-shadow:0 8px 30px #0001}
-.brand{text-align:center;color:var(--green);font-size:28px;font-weight:800;margin:8px 0 20px}
-.field{display:block;width:100%;padding:13px;margin:9px 0;border:1px solid #ccd5d9;border-radius:9px;background:white;color:#111}
-.switch{text-align:center;margin-top:15px;color:var(--muted)}.switch a{color:var(--green);font-weight:700;cursor:pointer}
-#appView{height:100dvh;max-width:1100px;margin:auto;background:white;display:grid;grid-template-columns:340px 1fr;overflow:hidden;box-shadow:0 0 25px #0001}
-.sidebar{border-left:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
-.topbar{background:var(--green);color:white;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.topbar strong{font-size:19px}.subtle{font-size:12px;opacity:.8}
-.profileline{display:flex;align-items:center;gap:10px;min-width:0}
-.avatar{width:43px;height:43px;flex:0 0 43px;border-radius:50%;background:#d5e9e5;color:var(--green);display:grid;place-items:center;font-weight:800;font-size:19px}
-#search{margin:12px;padding:12px;border:0;border-radius:9px;background:#f0f2f3;outline:none}
-#userList{overflow:auto;flex:1}.userrow{width:100%;background:white;color:var(--text);border-radius:0;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:11px;text-align:right;padding:13px}
-.userrow:hover{background:#f5f7f7}.grow{flex:1;min-width:0}.name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.preview{font-size:12px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.smallbtn{padding:8px 10px;font-size:12px}.empty{padding:22px;text-align:center;color:var(--muted);line-height:1.7}
-.chat{display:flex;flex-direction:column;min-width:0;background:#efeae2;position:relative}
-.chathead{background:#f7f9fa;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
-#messages{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:min(78%,520px);padding:9px 12px;border-radius:10px;background:white;align-self:flex-start;box-shadow:0 1px 1px #0001;overflow-wrap:anywhere;white-space:pre-wrap}
-.msg.mine{background:var(--sent);align-self:flex-end}.time{display:block;text-align:left;font-size:10px;color:var(--muted);margin-top:5px}
-.composer{display:flex;gap:8px;padding:12px;background:#f0f2f3;align-items:center}
-#messageInput{flex:1;min-width:0;border:0;border-radius:22px;padding:13px 16px;outline:none}
-#status{padding:8px 14px;font-size:12px;color:var(--muted);min-height:30px}
-.error{color:var(--danger);background:#fff1f0;padding:10px;border-radius:8px;margin:10px 0;font-size:13px;line-height:1.5}
-.info{font-size:13px;color:var(--muted);line-height:1.6}
-#mobileBack{display:none;background:#e7eeee;color:var(--green);padding:8px 11px}
-@media(max-width:650px){#appView{display:block;height:100dvh}.sidebar{height:100%;width:100%}.chat{display:none;height:100%;width:100%}#appView.chat-open .sidebar{display:none}#appView.chat-open .chat{display:flex}#mobileBack{display:inline-block}}
+*{box-sizing:border-box}body{margin:0;background:#101010;color:#fff;font-family:Arial,sans-serif}.wrap{max-width:520px;margin:auto;min-height:100vh;background:#171717}.head{padding:17px;background:#202020;color:#f5c542;font-size:21px;font-weight:bold;position:sticky;top:0}.screen{padding:15px}.hide{display:none!important}input,button{font:inherit}input{width:100%;padding:14px;margin:7px 0;border:1px solid #555;border-radius:10px;background:#252525;color:white}button{border:0;border-radius:10px;padding:13px;background:#f5c542;color:#171717;font-weight:bold;cursor:pointer}.wide{width:100%;margin-top:8px}.link{background:none;color:#f5c542;padding:12px}.row{display:flex;align-items:center;gap:12px;padding:13px 5px;border-bottom:1px solid #333;cursor:pointer}.avatar{width:45px;height:45px;border-radius:50%;background:#5b4715;display:grid;place-items:center;color:#fff;font-weight:bold;flex-shrink:0}.grow{flex:1;min-width:0}.muted{color:#aaa;font-size:13px;margin-top:5px;overflow-wrap:anywhere}.search{margin:5px 0 12px}.chathead{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #444}.back{background:#333;color:white}.messages{height:calc(100dvh - 225px);min-height:280px;overflow:auto;padding:12px 0}.bubble{max-width:82%;padding:11px 13px;margin:7px 0;border-radius:14px;overflow-wrap:anywhere}.mine{margin-left:auto;background:#f5c542;color:#171717}.theirs{background:#333}.time{font-size:10px;opacity:.7;text-align:right;margin-top:5px}.compose{display:flex;gap:7px;align-items:center}.compose input{flex:1;min-width:0}.empty{text-align:center;color:#aaa;padding:35px 10px}.error{color:#ff7777;white-space:pre-wrap;font-size:13px}.tabs{display:flex;gap:8px}.tabs button{flex:1;background:#333;color:white}.tabs button.on{background:#f5c542;color:#111}
 </style>
 </head>
 <body>
-<section id="authView">
-  <div class="brand">Zain Chat</div>
-  <h2 id="authTitle">لاگ اِن کریں</h2>
-  <div id="authError" class="error hidden"></div>
-  <input id="nameInput" class="field hidden" autocomplete="name" placeholder="آپ کا نام">
-  <input id="emailInput" class="field" type="email" autocomplete="email" placeholder="ای میل">
-  <input id="passwordInput" class="field" type="password" autocomplete="current-password" placeholder="پاس ورڈ (کم از کم 6 حروف)">
-  <button id="authButton" style="width:100%">لاگ اِن</button>
-  <div class="switch"><span id="switchText">اکاؤنٹ نہیں ہے؟</span> <a id="switchMode">رجسٹر کریں</a></div>
-  <p class="info">یہ ایپ آپ کے موجودہ Firebase پروجیکٹ سے منسلک ہے۔</p>
-</section>
+<div class="wrap">
+  <div class="head">♛ Zain Bhatti Chat</div>
+  <section id="auth" class="screen">
+    <h2 id="authTitle">Login</h2>
+    <div id="signupNameBox" class="hide"><input id="name" placeholder="Your name"></div>
+    <input id="email" type="email" autocomplete="email" placeholder="Email address">
+    <input id="password" type="password" autocomplete="current-password" placeholder="Password (at least 6 characters)">
+    <button class="wide" id="authButton" onclick="submitAuth()">Login</button>
+    <button class="link wide" id="switchButton" onclick="switchAuth()">Create new account</button>
+    <div id="authError" class="error"></div>
+  </section>
 
-<section id="appView" class="hidden">
-  <aside class="sidebar">
-    <div class="topbar">
-      <div><strong>Zain Chat</strong><div class="subtle" id="myEmail"></div></div>
-      <button id="logoutButton" class="smallbtn" style="background:#ffffff22">لاگ آؤٹ</button>
-    </div>
-    <input id="search" placeholder="نام یا ای میل تلاش کریں..." autocomplete="off">
-    <div id="userList"><div class="empty">صارفین لوڈ ہو رہے ہیں...</div></div>
-    <div id="status"></div>
-  </aside>
-  <main class="chat">
+  <section id="home" class="screen hide">
+    <input id="search" class="search" placeholder="Search people by name or email" oninput="searchUsers()">
+    <div class="tabs"><button id="peopleTab" class="on" onclick="showPeople()">People</button><button id="chatsTab" onclick="showChats()">Chats</button></div>
+    <div id="results"></div>
+    <button class="link wide" onclick="logout()">Log out</button>
+  </section>
+
+  <section id="conversation" class="screen hide">
     <div class="chathead">
-      <button id="mobileBack">واپس</button>
-      <div class="avatar" id="chatAvatar">Z</div>
-      <div class="grow"><div class="name" id="chatName">چیٹ منتخب کریں</div><div class="preview" id="chatEmail">بات چیت شروع کرنے کے لیے کسی صارف کو منتخب کریں</div></div>
+      <button class="back" onclick="backHome()">‹</button>
+      <div class="avatar" id="peerAvatar">?</div>
+      <div class="grow"><b id="peerName">Chat</b><div class="muted" id="peerEmail"></div></div>
     </div>
-    <div id="messages"><div class="empty">بائیں طرف سے کسی صارف کو منتخب کریں۔</div></div>
-    <form id="composer" class="composer">
-      <input id="messageInput" placeholder="پیغام لکھیں..." autocomplete="off" disabled>
-      <button id="sendButton" type="submit" disabled>بھیجیں</button>
-    </form>
-  </main>
-</section>
+    <div id="messages" class="messages"></div>
+    <div class="compose">
+      <input id="message" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+    <div id="chatError" class="error"></div>
+  </section>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -81,280 +50,270 @@ button:disabled{opacity:.55;cursor:not-allowed}.hidden{display:none!important}
 <script>
 'use strict';
 
-// Firebase Web configuration for Zain bhatti chat
+/* Your Firebase project configuration */
 const firebaseConfig = {
-  apiKey: "AIzaSyBBM8njxaNWZcib0HA3kPNmw32CMc0tqs",
+  apiKey: "AIzaSyBBM8njxaNWZcZib0HA3kPNmw32CMc0tqs",
   authDomain: "zain-bhatti-chat.firebaseapp.com",
   projectId: "zain-bhatti-chat",
   storageBucket: "zain-bhatti-chat.firebasestorage.app",
   messagingSenderId: "815632070562",
-  appId: "1:815632070562:web:b89e897b26cc9b871064fb"
+  appId: "1:815632070562:web:4a9b1ce52f77650d1064fb"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-
 const $ = id => document.getElementById(id);
-let me = null, allUsers = [], selectedUser = null;
-let usersUnsub = null, messagesUnsub = null, isRegister = false;
 
-function showAuthError(message) {
-  $('authError').textContent = message;
-  $('authError').classList.remove('hidden');
+let currentUser = null;
+let myProfile = {};
+let authMode = 'login';
+let activePeer = null;
+let activeChatId = null;
+let peopleCache = [];
+let messageUnsubscribe = null;
+let chatUnsubscribe = null;
+let pageMode = 'people';
+
+function escapeHTML(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  })[ch]);
 }
-function clearAuthError() {
+function showError(id, error) {
+  $(id).textContent = error && error.message ? error.message : String(error);
+}
+function switchAuth() {
+  authMode = authMode === 'login' ? 'signup' : 'login';
+  $('authTitle').textContent = authMode === 'login' ? 'Login' : 'Create account';
+  $('authButton').textContent = authMode === 'login' ? 'Login' : 'Sign up';
+  $('switchButton').textContent = authMode === 'login' ? 'Create new account' : 'Already have an account? Login';
+  $('signupNameBox').classList.toggle('hide', authMode === 'login');
   $('authError').textContent = '';
-  $('authError').classList.add('hidden');
 }
-function setStatus(message) { $('status').textContent = message || ''; }
-function safeText(value) { return String(value == null ? '' : value); }
-function initials(name) { return (safeText(name).trim().charAt(0) || 'U').toUpperCase(); }
-function chatIdFor(uid1, uid2) { return [uid1, uid2].sort().join('_'); }
-function formatTime(timestamp) {
-  if (!timestamp || !timestamp.toDate) return '';
-  return timestamp.toDate().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-}
-
-$('switchMode').addEventListener('click', () => {
-  isRegister = !isRegister;
-  clearAuthError();
-  $('nameInput').classList.toggle('hidden', !isRegister);
-  $('authTitle').textContent = isRegister ? 'نیا اکاؤنٹ بنائیں' : 'لاگ اِن کریں';
-  $('authButton').textContent = isRegister ? 'رجسٹر کریں' : 'لاگ اِن';
-  $('switchText').textContent = isRegister ? 'پہلے سے اکاؤنٹ ہے؟' : 'اکاؤنٹ نہیں ہے؟';
-  $('switchMode').textContent = isRegister ? 'لاگ اِن کریں' : 'رجسٹر کریں';
-  $('passwordInput').autocomplete = isRegister ? 'new-password' : 'current-password';
-});
-
-$('authButton').addEventListener('click', async () => {
-  clearAuthError();
-  const email = $('emailInput').value.trim();
-  const password = $('passwordInput').value;
-  const name = $('nameInput').value.trim();
-  if (!email || !password) return showAuthError('ای میل اور پاس ورڈ درج کریں۔');
-  if (isRegister && !name) return showAuthError('اپنا نام درج کریں۔');
-  if (password.length < 6) return showAuthError('پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔');
-  $('authButton').disabled = true;
+async function submitAuth() {
+  $('authError').textContent = '';
+  const email = $('email').value.trim().toLowerCase();
+  const password = $('password').value;
   try {
-    if (isRegister) {
+    if (!email || !password) throw new Error('Email اور password درج کریں۔');
+    if (authMode === 'signup') {
+      const name = $('name').value.trim();
+      if (!name) throw new Error('اپنا نام درج کریں۔');
+      if (password.length < 6) throw new Error('Password کم از کم 6 حروف کا ہونا چاہیے۔');
       const credential = await auth.createUserWithEmailAndPassword(email, password);
+      await credential.user.updateProfile({displayName:name});
       await db.collection('users').doc(credential.user.uid).set({
-        uid: credential.user.uid, name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        uid:credential.user.uid, name:name, email:email, photoURL:'',
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
       }, {merge:true});
     } else {
       await auth.signInWithEmailAndPassword(email, password);
     }
-  } catch (error) {
-    showAuthError(friendlyError(error));
-  } finally {
-    $('authButton').disabled = false;
-  }
-});
-
-function friendlyError(error) {
-  const code = error && error.code;
-  const map = {
-    'auth/invalid-email':'ای میل کا فارمیٹ درست نہیں۔',
-    'auth/user-not-found':'یہ اکاؤنٹ موجود نہیں۔ پہلے رجسٹر کریں۔',
-    'auth/wrong-password':'پاس ورڈ درست نہیں۔',
-    'auth/invalid-credential':'ای میل یا پاس ورڈ درست نہیں۔',
-    'auth/email-already-in-use':'یہ ای میل پہلے سے رجسٹر ہے۔ لاگ اِن کریں۔',
-    'auth/weak-password':'پاس ورڈ کم از کم 6 حروف کا رکھیں۔',
-    'auth/operation-not-allowed':'Firebase میں Email/Password sign-in فعال کریں۔',
-    'permission-denied':'Firestore Rules اجازت نہیں دے رہے۔ نیچے دی گئی Rules لگائیں۔',
-    'unavailable':'انٹرنیٹ یا Firebase سروس دستیاب نہیں۔'
-  };
-  return map[code] || (error && error.message) || 'کوئی خرابی پیش آئی۔';
+  } catch (error) { showError('authError', error); }
 }
-
-$('logoutButton').addEventListener('click', () => auth.signOut());
-$('search').addEventListener('input', renderUsers);
-$('mobileBack').addEventListener('click', () => $('appView').classList.remove('chat-open'));
-
+function showScreen(name) {
+  ['auth','home','conversation'].forEach(id => $(id).classList.toggle('hide', id !== name));
+}
 auth.onAuthStateChanged(async user => {
-  me = user || null;
   if (!user) {
-    cleanupListeners();
-    selectedUser = null;
-    $('appView').classList.add('hidden');
-    $('authView').classList.remove('hidden');
+    currentUser = null;
+    if (chatUnsubscribe) chatUnsubscribe();
+    if (messageUnsubscribe) messageUnsubscribe();
+    showScreen('auth');
     return;
   }
-  $('authView').classList.add('hidden');
-  $('appView').classList.remove('hidden');
-  $('myEmail').textContent = user.email || '';
+  currentUser = user;
   try {
-    const profileRef = db.collection('users').doc(user.uid);
-    const profile = await profileRef.get();
-    if (!profile.exists) {
-      await profileRef.set({
-        uid:user.uid,
-        name:user.displayName || (user.email || 'User').split('@')[0],
-        email:user.email || '',
-        createdAt:firebase.firestore.FieldValue.serverTimestamp()
-      }, {merge:true});
-    } else {
-      await profileRef.set({uid:user.uid, email:user.email || ''}, {merge:true});
-    }
-    subscribeUsers();
+    await ensureMyProfile();
+    showScreen('home');
+    await loadPeople();
+    showPeople();
   } catch (error) {
-    setStatus(friendlyError(error));
-    console.error(error);
+    showScreen('home');
+    $('results').innerHTML = '<div class="error">Profile/database error: '+escapeHTML(error.message)+'</div>';
   }
 });
-
-function cleanupListeners() {
-  if (usersUnsub) usersUnsub();
-  if (messagesUnsub) messagesUnsub();
-  usersUnsub = messagesUnsub = null;
+async function ensureMyProfile() {
+  const ref = db.collection('users').doc(currentUser.uid);
+  const snap = await ref.get();
+  if (!snap.exists) {
+    await ref.set({
+      uid:currentUser.uid,
+      name:currentUser.displayName || (currentUser.email || 'User').split('@')[0],
+      email:currentUser.email || '',
+      photoURL:'',
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+  const fresh = await ref.get();
+  myProfile = fresh.data() || {};
+  if (!myProfile.uid) {
+    await ref.set({uid:currentUser.uid,email:currentUser.email || ''},{merge:true});
+    myProfile.uid = currentUser.uid;
+  }
 }
-function subscribeUsers() {
-  if (usersUnsub) usersUnsub();
-  setStatus('صارفین لوڈ ہو رہے ہیں...');
-  usersUnsub = db.collection('users').onSnapshot(snapshot => {
-    allUsers = snapshot.docs.map(doc => ({...doc.data(), uid:doc.id}))
-      .filter(u => u.uid !== me.uid);
-    renderUsers();
-    setStatus(allUsers.length ? (allUsers.length + ' صارفین دستیاب ہیں') : 'ابھی کوئی دوسرا صارف دستیاب نہیں۔');
-  }, error => {
-    setStatus(friendlyError(error));
-    console.error(error);
-  });
+async function loadPeople() {
+  $('results').innerHTML = '<div class="empty">Loading users...</div>';
+  try {
+    const snap = await db.collection('users').limit(300).get();
+    peopleCache = snap.docs.map(doc => {
+      const data = doc.data() || {};
+      return {...data, uid:data.uid || doc.id};
+    }).filter(person => person.uid && person.uid !== currentUser.uid);
+    renderPeople(peopleCache);
+  } catch (error) {
+    $('results').innerHTML = '<div class="error">Users could not load: '+escapeHTML(error.message)+'</div>';
+  }
 }
-function renderUsers() {
-  const query = $('search').value.trim().toLowerCase();
-  const filtered = allUsers.filter(u =>
-    safeText(u.name).toLowerCase().includes(query) ||
-    safeText(u.email).toLowerCase().includes(query)
-  );
-  const root = $('userList');
-  root.replaceChildren();
-  if (!filtered.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = allUsers.length ? 'اس تلاش سے کوئی مماثل صارف نہیں ملا۔' : 'ابھی کوئی دوسرا صارف دستیاب نہیں۔';
-    root.appendChild(empty);
+function renderPeople(list) {
+  if (!list.length) {
+    $('results').innerHTML = '<div class="empty">ابھی کوئی دوسرا رجسٹرڈ صارف نہیں ملا۔ دوسرے اکاؤنٹ سے بھی رجسٹر ہو کر دیکھیں۔</div>';
     return;
   }
-  filtered.forEach(user => {
-    const row = document.createElement('button');
-    row.className = 'userrow';
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar';
-    avatar.textContent = initials(user.name);
-    const info = document.createElement('div');
-    info.className = 'grow';
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = safeText(user.name || 'User');
-    const email = document.createElement('div');
-    email.className = 'preview';
-    email.textContent = safeText(user.email || '');
-    info.append(name,email);
-    const action = document.createElement('span');
-    action.className = 'gold';
-    action.textContent = 'چیٹ';
-    row.append(avatar,info,action);
-    row.addEventListener('click', () => openChat(user));
-    root.appendChild(row);
-  });
+  $('results').innerHTML = list.map(person => {
+    const name = person.name || person.displayName || 'User';
+    const email = person.email || '';
+    const uid = escapeHTML(person.uid);
+    return `<div class="row" onclick="startChat('${uid}')">
+      <div class="avatar">${escapeHTML(name.charAt(0).toUpperCase())}</div>
+      <div class="grow"><b>${escapeHTML(name)}</b><div class="muted">${escapeHTML(email)}</div></div>
+      <b style="color:#f5c542">Chat ›</b>
+    </div>`;
+  }).join('');
 }
-async function openChat(user) {
-  selectedUser = user;
-  $('appView').classList.add('chat-open');
-  $('chatAvatar').textContent = initials(user.name);
-  $('chatName').textContent = safeText(user.name || 'User');
-  $('chatEmail').textContent = safeText(user.email || '');
-  $('messageInput').disabled = false;
-  $('sendButton').disabled = false;
-  $('messageInput').focus();
-  if (messagesUnsub) messagesUnsub();
-  $('messages').replaceChildren();
-  const id = chatIdFor(me.uid, user.uid);
-  const chatRef = db.collection('chats').doc(id);
-  try {
-    await chatRef.set({
-      participants:[me.uid,user.uid].sort(),
-      participantNames:{
-        [me.uid]: me.displayName || me.email || 'User',
-        [user.uid]: user.name || user.email || 'User'
-      },
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    }, {merge:true});
-    messagesUnsub = chatRef.collection('messages').orderBy('createdAt','asc').onSnapshot(snapshot => {
-      const box = $('messages');
-      box.replaceChildren();
-      if (snapshot.empty) {
-        const empty = document.createElement('div');
-        empty.className = 'empty';
-        empty.textContent = 'یہاں سے اپنی گفتگو شروع کریں۔';
-        box.appendChild(empty);
-      } else {
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const bubble = document.createElement('div');
-          bubble.className = 'msg' + (data.senderId === me.uid ? ' mine' : '');
-          const body = document.createElement('div');
-          body.textContent = safeText(data.text);
-          const time = document.createElement('span');
-          time.className = 'time';
-          time.textContent = formatTime(data.createdAt);
-          bubble.append(body,time);
-          box.appendChild(bubble);
-        });
-        box.scrollTop = box.scrollHeight;
+async function searchUsers() {
+  const q = $('search').value.trim().toLowerCase();
+  if (pageMode !== 'people') return;
+  if (!q) { renderPeople(peopleCache); return; }
+  const filtered = peopleCache.filter(person =>
+    String(person.name || person.displayName || '').toLowerCase().includes(q) ||
+    String(person.email || '').toLowerCase().includes(q)
+  );
+  renderPeople(filtered);
+}
+function showPeople() {
+  pageMode = 'people';
+  $('peopleTab').classList.add('on');
+  $('chatsTab').classList.remove('on');
+  $('search').classList.remove('hide');
+  $('search').value = '';
+  renderPeople(peopleCache);
+}
+function showChats() {
+  pageMode = 'chats';
+  $('peopleTab').classList.remove('on');
+  $('chatsTab').classList.add('on');
+  $('search').classList.add('hide');
+  loadChats();
+}
+async function loadChats() {
+  if (!currentUser) return;
+  if (chatUnsubscribe) chatUnsubscribe();
+  $('results').innerHTML = '<div class="empty">Loading chats...</div>';
+  chatUnsubscribe = db.collection('chats')
+    .where('members','array-contains',currentUser.uid)
+    .onSnapshot(async snapshot => {
+      const rows = [];
+      for (const doc of snapshot.docs) {
+        const chat = doc.data() || {};
+        const otherUid = (chat.members || []).find(uid => uid !== currentUser.uid);
+        if (!otherUid) continue;
+        const person = peopleCache.find(p => p.uid === otherUid) || {uid:otherUid,name:'User'};
+        rows.push(`<div class="row" onclick="startChat('${escapeHTML(otherUid)}')">
+          <div class="avatar">${escapeHTML((person.name || 'U').charAt(0).toUpperCase())}</div>
+          <div class="grow"><b>${escapeHTML(person.name || 'User')}</b><div class="muted">${escapeHTML(chat.lastMessage || 'Open conversation')}</div></div>
+        </div>`);
       }
-    }, error => {
-      $('messages').textContent = friendlyError(error);
-      console.error(error);
-    });
+      $('results').innerHTML = rows.join('') || '<div class="empty">ابھی کوئی چیٹ نہیں۔ People میں جا کر کسی صارف کو منتخب کریں۔</div>';
+    }, error => showError('results', error));
+}
+async function startChat(uid) {
+  if (!uid || uid === currentUser.uid) return;
+  $('chatError').textContent = '';
+  try {
+    const personSnap = await db.collection('users').doc(uid).get();
+    if (!personSnap.exists) throw new Error('یہ صارف users collection میں موجود نہیں۔');
+    activePeer = {...personSnap.data(), uid};
+    const members = [currentUser.uid, uid].sort();
+    const chatId = members.join('_');
+    const chatRef = db.collection('chats').doc(chatId);
+    const chatSnap = await chatRef.get();
+    if (!chatSnap.exists) {
+      await chatRef.set({
+        type:'private',
+        members:members,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+        lastMessage:''
+      });
+    }
+    activeChatId = chatId;
+    $('peerName').textContent = activePeer.name || activePeer.displayName || 'User';
+    $('peerEmail').textContent = activePeer.email || '';
+    $('peerAvatar').textContent = (activePeer.name || 'U').charAt(0).toUpperCase();
+    $('message').value = '';
+    $('chatError').textContent = '';
+    showScreen('conversation');
+    listenMessages();
   } catch (error) {
-    $('messages').textContent = friendlyError(error);
-    console.error(error);
+    alert('Chat نہیں کھل سکی: ' + error.message);
   }
 }
-
-$('composer').addEventListener('submit', async event => {
-  event.preventDefault();
-  if (!me || !selectedUser) return;
-  const text = $('messageInput').value.trim();
-  if (!text) return;
-  const send = $('sendButton');
-  send.disabled = true;
-  $('messageInput').disabled = true;
+function listenMessages() {
+  if (messageUnsubscribe) messageUnsubscribe();
+  const box = $('messages');
+  box.innerHTML = '<div class="empty">Loading messages...</div>';
+  messageUnsubscribe = db.collection('chats').doc(activeChatId).collection('messages')
+    .orderBy('createdAt','asc')
+    .onSnapshot(snapshot => {
+      if (snapshot.empty) {
+        box.innerHTML = '<div class="empty">یہاں سے گفتگو شروع کریں۔</div>';
+        return;
+      }
+      box.innerHTML = snapshot.docs.map(doc => {
+        const msg = doc.data() || {};
+        const mine = msg.senderId === currentUser.uid;
+        const stamp = msg.createdAt && msg.createdAt.toDate
+          ? msg.createdAt.toDate().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+        return `<div class="bubble ${mine?'mine':'theirs'}">${escapeHTML(msg.text || '')}<div class="time">${stamp}</div></div>`;
+      }).join('');
+      box.scrollTop = box.scrollHeight;
+    }, error => showError('chatError', error));
+}
+async function sendMessage() {
+  const text = $('message').value.trim();
+  if (!text || !activeChatId) return;
+  $('chatError').textContent = '';
+  $('message').value = '';
   try {
-    const id = chatIdFor(me.uid, selectedUser.uid);
-    const chatRef = db.collection('chats').doc(id);
+    const chatRef = db.collection('chats').doc(activeChatId);
     await chatRef.collection('messages').add({
-      text,
-      senderId:me.uid,
-      receiverId:selectedUser.uid,
+      text:text,
+      senderId:currentUser.uid,
       createdAt:firebase.firestore.FieldValue.serverTimestamp()
     });
     await chatRef.set({
-      participants:[me.uid,selectedUser.uid].sort(),
       lastMessage:text,
       updatedAt:firebase.firestore.FieldValue.serverTimestamp()
     }, {merge:true});
-    $('messageInput').value = '';
   } catch (error) {
-    alert(friendlyError(error));
-    console.error(error);
-  } finally {
-    send.disabled = false;
-    $('messageInput').disabled = false;
-    $('messageInput').focus();
+    $('message').value = text;
+    showError('chatError', error);
   }
-});
-
-// Show a clear diagnostic instead of leaving a blank page if the SDK fails to load.
-window.addEventListener('error', event => {
-  console.error(event.error || event.message);
-  if (!$('authView').classList.contains('hidden')) {
-    showAuthError('ایپ میں خرابی: ' + (event.message || 'JavaScript error'));
-  }
-});
+}
+function backHome() {
+  if (messageUnsubscribe) { messageUnsubscribe(); messageUnsubscribe = null; }
+  activeChatId = null;
+  activePeer = null;
+  showScreen('home');
+  showChats();
+}
+async function logout() {
+  if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
+  if (messageUnsubscribe) { messageUnsubscribe(); messageUnsubscribe = null; }
+  await auth.signOut();
+}
 </script>
 </body>
 </html>
